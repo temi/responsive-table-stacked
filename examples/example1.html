@@ -1,0 +1,155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Responsive table stacked</title>
+    <link rel="stylesheet" href="../stacked.css" media="screen and (max-width:736px)" type="text/css"/>
+    <script src="../lib/jquery.js"></script>
+    <script src="../stacked.js"></script>
+</head>
+<body>
+<table class="table table-bordered surveyResults responsive-table-stacked">
+    <thead><tr><th>Transect / plot Id:<a href="#" tabindex="-1" class="helphover" data-original-title="" data-placement="top" data-content="The identifier of the transect or plot in which sampling is being done.">
+        <i class="icon-question-sign">&nbsp;</i>
+    </a></th><th>Trap / Sample Site Id:<a href="#" tabindex="-1" class="helphover" data-original-title="" data-placement="top" data-content="The identifier of the point at which the observational record was made">
+        <i class="icon-question-sign">&nbsp;</i>
+    </a></th><th class="required">Species:<a href="#" tabindex="-1" class="helphover" data-original-title="" data-placement="top" data-content="All species recorded at the sample site">
+        <i class="icon-question-sign">&nbsp;</i>
+    </a></th><th>No. of individuals:<a href="#" tabindex="-1" class="helphover" data-original-title="" data-placement="top" data-content="The number of organisms in the survey at the sample site which share the same set of record attributes.">
+        <i class="icon-question-sign">&nbsp;</i>
+    </a></th><th>Nature of evidence:<a href="#" tabindex="-1" class="helphover" data-original-title="" data-placement="top" data-content="Nature of the evidence for the basis of the record">
+        <i class="icon-question-sign">&nbsp;</i>
+    </a></th><th>Sex:<a href="#" tabindex="-1" class="helphover" data-original-title="" data-placement="top" data-content="The sex of the organism recorded">
+        <i class="icon-question-sign">&nbsp;</i>
+    </a></th><th>Life stage:<a href="#" tabindex="-1" class="helphover" data-original-title="" data-placement="top" data-content="Life stage of the organism recorded">
+        <i class="icon-question-sign">&nbsp;</i>
+    </a></th><th>Organism health:<a href="#" tabindex="-1" class="helphover" data-original-title="" data-placement="top" data-content="The health or condition of the organism recorded">
+        <i class="icon-question-sign">&nbsp;</i>
+    </a></th><th>Biological material taken:<a href="#" tabindex="-1" class="helphover" data-original-title="" data-placement="top" data-content="Indicator as to whether biological material (either as a sample or whole organism) was taken.">
+        <i class="icon-question-sign">&nbsp;</i>
+    </a></th><th>Notes:<a href="#" tabindex="-1" class="helphover" data-original-title="" data-placement="top" data-content="Any notes or comments applicable to a record (eg. health/condition indicators, nature of biological material taken, unlisted variants on select lists, other measurements, general observations, etc.).">
+        <i class="icon-question-sign">&nbsp;</i>
+    </a></th><th></th>
+    </tr></thead>
+    <tbody data-bind="template:{name:'surveyResultsviewTmpl', foreach: data.surveyResults}"><tr>
+        <td><input class="input-mini" data-bind="value:plotId" type="text"></td>
+        <td><input class="input-mini" data-bind="value:sampleSiteId" type="text"></td>
+        <td>
+<span class="input-prepend input-append" data-bind="with:species">
+    <input type="text" placeholder="" data-bind="value:name,event:{focusout:focusLost},fusedAutocomplete:{source:transients.source, name:transients.name, guid:transients.guid, matchUnknown: true}" data-validation-engine="validate[required,funcCall[validateSpeciesLookup]]" autocomplete="off" class="ac_input">
+    <span class="add-on">
+        <a target="_blank" data-bind="attr:{href: transients.bioProfileUrl}, visible: transients.guid" href="http://bie.ala.org.au/species/urn:lsid:biodiversity.org.au:apni.taxon:302465"><i class="icon-info-sign"></i></a>
+        <a data-bind="visible: !guid() &amp;&amp; name()" href="#" class="helphover" data-original-title="" data-placement="top" data-content="No matching species was found in Atlas of Living Australia's taxonomy" style="display: none;">
+            <i class="icon-question-sign">&nbsp;</i>
+        </a>
+    </span>
+</span>
+        </td>
+        <td><input class="input-mini" style="text-align:center" data-bind="value:numberOfOrganisms" data-validation-engine="validate[custom[number],min[0]]" type="number" id="form-validation-field-0"></td>
+        <td><select data-bind="value:evidence,options:transients.evidenceConstraints,optionsCaption:&quot;Please select&quot;"><option value="">Please select</option><option value="Living organism">Living organism</option><option value="Dead organism">Dead organism</option><option value="Tracks">Tracks</option><option value="Scats">Scats</option><option value="Debris from molting">Debris from molting</option><option value="Scratchings">Scratchings</option><option value="Nest / burrow / lodgings">Nest / burrow / lodgings</option><option value="Other (specify in notes)">Other (specify in notes)</option></select></td>
+        <td><select data-bind="value:sex,options:transients.sexConstraints,optionsCaption:&quot;Please select&quot;"><option value="">Please select</option><option value="Male">Male</option><option value="Female">Female</option><option value="Hermaphrodite">Hermaphrodite</option><option value="Undetermined">Undetermined</option><option value="Other (specify in notes)">Other (specify in notes)</option></select></td>
+        <td><select data-bind="value:lifeStage,options:transients.lifeStageConstraints,optionsCaption:&quot;Please select&quot;"><option value="">Please select</option><option value="Juvenile">Juvenile</option><option value="Adolescent">Adolescent</option><option value="Pre-metamorphic">Pre-metamorphic</option><option value="metamorphic juvenile">metamorphic juvenile</option><option value="Larva">Larva</option><option value="Nymph">Nymph</option><option value="Pupa">Pupa</option><option value="Adult - non reproductive">Adult - non reproductive</option><option value="Adult - reproductive">Adult - reproductive</option><option value="Other (specify in notes)">Other (specify in notes)</option></select></td>
+        <td><input class="input-mini" data-bind="value:health" type="text"></td>
+        <td><select data-bind="value:biologicalMaterialTaken,options:transients.biologicalMaterialTakenConstraints,optionsCaption:&quot;Please select&quot;"><option value="">Please select</option><option value="Yes">Yes</option><option value="No">No</option></select></td>
+        <td><textarea data-bind="value:speciesNotes"></textarea></td>
+        <td><i data-bind="click:$root.removesurveyResultsRow" class="icon-remove"></i></td>
+    </tr><tr>
+        <td><input class="input-mini" data-bind="value:plotId" type="text"></td>
+        <td><input class="input-mini" data-bind="value:sampleSiteId" type="text"></td>
+        <td>
+<span class="input-prepend input-append" data-bind="with:species">
+    <input type="text" placeholder="" data-bind="value:name,event:{focusout:focusLost},fusedAutocomplete:{source:transients.source, name:transients.name, guid:transients.guid, matchUnknown: true}" data-validation-engine="validate[required,funcCall[validateSpeciesLookup]]" autocomplete="off" class="ac_input">
+    <span class="add-on">
+        <a target="_blank" data-bind="attr:{href: transients.bioProfileUrl}, visible: transients.guid" href="http://bie.ala.org.au/species/undefined" style="display: none;"><i class="icon-info-sign"></i></a>
+        <a data-bind="visible: !guid() &amp;&amp; name()" href="#" class="helphover" data-original-title="" data-placement="top" data-content="No matching species was found in Atlas of Living Australia's taxonomy" style="display: none;">
+            <i class="icon-question-sign">&nbsp;</i>
+        </a>
+    </span>
+</span>
+        </td>
+        <td><input class="input-mini" style="text-align:center" data-bind="value:numberOfOrganisms" data-validation-engine="validate[custom[number],min[0]]" type="number"></td>
+        <td><select data-bind="value:evidence,options:transients.evidenceConstraints,optionsCaption:&quot;Please select&quot;"><option value="">Please select</option><option value="Living organism">Living organism</option><option value="Dead organism">Dead organism</option><option value="Tracks">Tracks</option><option value="Scats">Scats</option><option value="Debris from molting">Debris from molting</option><option value="Scratchings">Scratchings</option><option value="Nest / burrow / lodgings">Nest / burrow / lodgings</option><option value="Other (specify in notes)">Other (specify in notes)</option></select></td>
+        <td><select data-bind="value:sex,options:transients.sexConstraints,optionsCaption:&quot;Please select&quot;"><option value="">Please select</option><option value="Male">Male</option><option value="Female">Female</option><option value="Hermaphrodite">Hermaphrodite</option><option value="Undetermined">Undetermined</option><option value="Other (specify in notes)">Other (specify in notes)</option></select></td>
+        <td><select data-bind="value:lifeStage,options:transients.lifeStageConstraints,optionsCaption:&quot;Please select&quot;"><option value="">Please select</option><option value="Juvenile">Juvenile</option><option value="Adolescent">Adolescent</option><option value="Pre-metamorphic">Pre-metamorphic</option><option value="metamorphic juvenile">metamorphic juvenile</option><option value="Larva">Larva</option><option value="Nymph">Nymph</option><option value="Pupa">Pupa</option><option value="Adult - non reproductive">Adult - non reproductive</option><option value="Adult - reproductive">Adult - reproductive</option><option value="Other (specify in notes)">Other (specify in notes)</option></select></td>
+        <td><input class="input-mini" data-bind="value:health" type="text"></td>
+        <td><select data-bind="value:biologicalMaterialTaken,options:transients.biologicalMaterialTakenConstraints,optionsCaption:&quot;Please select&quot;"><option value="">Please select</option><option value="Yes">Yes</option><option value="No">No</option></select></td>
+        <td><textarea data-bind="value:speciesNotes"></textarea></td>
+        <td><i data-bind="click:$root.removesurveyResultsRow" class="icon-remove"></i></td>
+    </tr><tr>
+        <td><input class="input-mini" data-bind="value:plotId" type="text"></td>
+        <td><input class="input-mini" data-bind="value:sampleSiteId" type="text"></td>
+        <td>
+<span class="input-prepend input-append" data-bind="with:species">
+    <input type="text" placeholder="" data-bind="value:name,event:{focusout:focusLost},fusedAutocomplete:{source:transients.source, name:transients.name, guid:transients.guid, matchUnknown: true}" data-validation-engine="validate[required,funcCall[validateSpeciesLookup]]" autocomplete="off" class="ac_input">
+    <span class="add-on">
+        <a target="_blank" data-bind="attr:{href: transients.bioProfileUrl}, visible: transients.guid" href="http://bie.ala.org.au/species/undefined" style="display: none;"><i class="icon-info-sign"></i></a>
+        <a data-bind="visible: !guid() &amp;&amp; name()" href="#" class="helphover" data-original-title="" data-placement="top" data-content="No matching species was found in Atlas of Living Australia's taxonomy" style="display: none;">
+            <i class="icon-question-sign">&nbsp;</i>
+        </a>
+    </span>
+</span>
+        </td>
+        <td><input class="input-mini" style="text-align:center" data-bind="value:numberOfOrganisms" data-validation-engine="validate[custom[number],min[0]]" type="number"></td>
+        <td><select data-bind="value:evidence,options:transients.evidenceConstraints,optionsCaption:&quot;Please select&quot;"><option value="">Please select</option><option value="Living organism">Living organism</option><option value="Dead organism">Dead organism</option><option value="Tracks">Tracks</option><option value="Scats">Scats</option><option value="Debris from molting">Debris from molting</option><option value="Scratchings">Scratchings</option><option value="Nest / burrow / lodgings">Nest / burrow / lodgings</option><option value="Other (specify in notes)">Other (specify in notes)</option></select></td>
+        <td><select data-bind="value:sex,options:transients.sexConstraints,optionsCaption:&quot;Please select&quot;"><option value="">Please select</option><option value="Male">Male</option><option value="Female">Female</option><option value="Hermaphrodite">Hermaphrodite</option><option value="Undetermined">Undetermined</option><option value="Other (specify in notes)">Other (specify in notes)</option></select></td>
+        <td><select data-bind="value:lifeStage,options:transients.lifeStageConstraints,optionsCaption:&quot;Please select&quot;"><option value="">Please select</option><option value="Juvenile">Juvenile</option><option value="Adolescent">Adolescent</option><option value="Pre-metamorphic">Pre-metamorphic</option><option value="metamorphic juvenile">metamorphic juvenile</option><option value="Larva">Larva</option><option value="Nymph">Nymph</option><option value="Pupa">Pupa</option><option value="Adult - non reproductive">Adult - non reproductive</option><option value="Adult - reproductive">Adult - reproductive</option><option value="Other (specify in notes)">Other (specify in notes)</option></select></td>
+        <td><input class="input-mini" data-bind="value:health" type="text"></td>
+        <td><select data-bind="value:biologicalMaterialTaken,options:transients.biologicalMaterialTakenConstraints,optionsCaption:&quot;Please select&quot;"><option value="">Please select</option><option value="Yes">Yes</option><option value="No">No</option></select></td>
+        <td><textarea data-bind="value:speciesNotes"></textarea></td>
+        <td><i data-bind="click:$root.removesurveyResultsRow" class="icon-remove"></i></td>
+    </tr></tbody>
+    <script id="surveyResultsviewTmpl" type="text/html"><tr>
+        <td><input  class="input-mini" data-bind='value:plotId'  type='text' class='input-small'/></td>
+        <td><input  class="input-mini" data-bind='value:sampleSiteId'  type='text' class='input-small'/></td>
+        <td>
+<span class="input-prepend input-append" data-bind="with:species">
+    <input type="text" placeholder="" data-bind="value:name,event:{focusout:focusLost},fusedAutocomplete:{source:transients.source, name:transients.name, guid:transients.guid, matchUnknown: true}"  data-validation-engine='validate[required,funcCall[validateSpeciesLookup]]'/>
+    <span class="add-on">
+        <a target="_blank" data-bind="attr:{href: transients.bioProfileUrl}, visible: transients.guid"><i class="icon-info-sign"></i></a>
+        <a data-bind="visible: !guid() && name()" href="#" class="helphover" data-original-title="" data-placement="top" data-content="No matching species was found in Atlas of Living Australia's taxonomy">
+            <i class="icon-question-sign">&nbsp;</i>
+        </a>
+    </span>
+</span>
+        </td>
+        <td><input class="input-mini" style="text-align:center" data-bind='value:numberOfOrganisms' data-validation-engine='validate[custom[number],min[0]]' type='number' class='input-mini'/></td>
+        <td><select data-bind='value:evidence,options:transients.evidenceConstraints,optionsCaption:"Please select"'></select></td>
+        <td><select data-bind='value:sex,options:transients.sexConstraints,optionsCaption:"Please select"'></select></td>
+        <td><select data-bind='value:lifeStage,options:transients.lifeStageConstraints,optionsCaption:"Please select"'></select></td>
+        <td><input  class="input-mini" data-bind='value:health'  type='text' class='input-small'/></td>
+        <td><select data-bind='value:biologicalMaterialTaken,options:transients.biologicalMaterialTakenConstraints,optionsCaption:"Please select"'></select></td>
+        <td><textarea  data-bind='value:speciesNotes'></textarea></td>
+        <td><i data-bind='click:$root.removesurveyResultsRow' class='icon-remove'></i></td>
+        </tr></script>
+    <tfoot>
+    <tr>
+        <td colspan="3"><span>Total No. of individual organisms recorded in this survey event:</span></td>
+        <td><span class="value" data-bind="text:data.totalNumberOfOrganisms">10</span></td>
+        <td colspan="6"><span></span></td>
+        <td></td>
+    </tr>
+    <tr><td colspan="11" style="text-align:left;">
+        <button type="button" class="btn btn-small" data-bind="click:addsurveyResultsRow">
+            <i class="icon-plus"></i> Add a row</button>
+        <button type="button" class="btn btn-small" data-bind="click:showsurveyResultsTableDataUpload"><i class="icon-upload"></i> Upload data for this table</button>
+
+
+    </td></tr>
+    <tr data-bind="visible:surveyResultsTableDataUploadVisible" style="display: none;"><td colspan="11">
+        <div class="text-error text-left">
+            Note: Only valid exact scientific names will be matched and populated from the database (indicated by a <i class="icon-info-sign"></i> button). Unmatched species will load, but will not show <i class="icon-info-sign"></i> button. Please check your uploaded data and correct as required.
+        </div><div class="text-left" style="margin:5px">
+        <a href="/biocollect/proxy/excelOutputTemplate?type=Fauna Survey Details&amp;listName=surveyResults" target="surveyResultsTemplateDownload" class="btn">Step 1 - Download template (.xlsx)</a>
+    </div>
+        <div class="text-left" style="margin:5px;">
+            <input type="checkbox" data-bind="checked:appendTableRows" style="margin-right:5px">Append uploaded data to table (unticking this checkbox will result in all table rows being replaced)
+        </div>
+
+        <div class="btn fileinput-button" style="margin-left:5px">
+            <input id="surveyResultsTableDataUpload" type="file" name="data" data-bind="fileUploadNoImage:surveyResultsTableDataUploadOptions">
+            Step 2 - Upload populated template
+        </div></td></tr> <script id="surveyResultstemplate-upload" type="text/x-tmpl">{% %}</script>
+    <script id="surveyResultstemplate-download" type="text/x-tmpl">{% %}</script>                </tfoot>
+</table>
+</body>
+</html>
