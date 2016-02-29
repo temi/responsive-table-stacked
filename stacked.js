@@ -15,7 +15,8 @@
  * Created by Temi on 26/02/16.
  */
 $(document).ready(function() {
-    $('.responsive-table-stacked').each(function(index, item){
+    $('table').each(function(index, item){
+        $(this).addClass('responsive-table-stacked');
         addAttributeToTd(item)
         watch(this, addAttributeToTd)
     });
